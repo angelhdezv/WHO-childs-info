@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crecimiento infantil (OMS)</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -34,38 +33,45 @@
                 <div>
                     <label class="block text-sm text-slate-600 mb-1">Sexo</label>
 
-                    <div id="sexSwitch"
-                        class="relative w-40 h-10 bg-slate-200 rounded-full flex items-center cursor-pointer">
-                        <div id="sexKnob" class="absolute left-1 top-1 w-8 h-8 bg-blue-500 rounded-full transition-all">
+                    <div id="sexSwitch" class="relative w-44 h-11 bg-slate-200 rounded-full cursor-pointer select-none">
+                        <!-- Knob -->
+                        <div id="sexKnob" class="
+                                                absolute
+                                                inset-y-1
+                                                left-1
+                                                w-[calc(50%-0.5rem)]
+                                                bg-blue-500
+                                                rounded-full
+                                                transition-transform
+                                                duration-300
+                                            "></div>
+
+                        <!-- Labels -->
+                        <div class="relative z-10 h-full flex items-center text-sm font-medium">
+                            <span class="flex-1 text-center">Niño</span>
+                            <span class="flex-1 text-center">Niña</span>
                         </div>
-
-                        <span class="flex-1 text-center text-sm font-medium">Niño</span>
-                        <span class="flex-1 text-center text-sm font-medium">Niña</span>
                     </div>
+
+                    <input type="hidden" id="sex" value="M">
                 </div>
 
-                <input type="hidden" id="sex" value="M">
-
-
-                <!-- Edad -->
+                <!-- Fechas -->
                 <div>
-                    <label class="block text-sm text-slate-600 mb-1">
-                        Fecha de nacimiento
-                    </label>
-                    <input type="date" id="birthDate" required class="input" />
+                    <label class="block text-sm text-slate-600 mb-1">Fecha de nacimiento</label>
+                    <input type="date" id="birthDate" required class="w-full border rounded-lg px-3 py-2">
                 </div>
 
                 <div>
-                    <label class="block text-sm text-slate-600 mb-1">
-                        Fecha de evaluación
-                    </label>
-                    <input type="date" id="evalDate" required class="input" />
+                    <label class="block text-sm text-slate-600 mb-1">Fecha de evaluación</label>
+                    <input type="date" id="evalDate" required class="w-full border rounded-lg px-3 py-2">
                 </div>
 
                 <!-- Estatura -->
                 <div>
                     <label class="block text-sm text-slate-600 mb-1">Estatura (cm)</label>
-                    <input id="lengthCm" type="number" step="0.1" required class="input" placeholder="Ej. 62.0">
+                    <input id="lengthCm" type="number" step="0.1" required class="w-full border rounded-lg px-3 py-2"
+                        placeholder="Ej. 62.0">
                 </div>
 
                 <!-- Button -->
@@ -83,24 +89,66 @@
             <!-- Result -->
             <section id="resultSection" class="hidden space-y-4">
 
+                <!-- Main status -->
                 <div id="mainStatus" class="text-center text-lg font-semibold"></div>
 
+                <!-- OMS bar -->
+                <div class="space-y-2">
+
+                    <!-- Labels -->
+                    <div class="flex text-[9px] font-medium text-slate-500">
+                        <span class="w-[15%] text-center">Desnut. severa</span>
+                        <span class="w-[15%] text-center">Desnutrición</span>
+                        <span class="w-[40%] text-center font-semibold text-green-600">
+                            Normal
+                        </span>
+                        <span class="w-[30%] text-center">Talla alta</span>
+                    </div>
+
+
+                    <!-- Bar -->
+                    <div class="relative h-2 rounded-full flex mt-3">
+                        <!-- < -3 -->
+                        <div class="w-[15%] bg-red-500"></div>
+
+                        <!-- -3 a -2 -->
+                        <div class="w-[15%] bg-orange-400"></div>
+
+                        <!-- -2 a +2 -->
+                        <div class="w-[40%] bg-green-500"></div>
+
+                        <!-- > +2 -->
+                        <div class="w-[30%] bg-yellow-400"></div>
+
+                        <!-- Marker -->
+                        <div id="zMarker" class="absolute -top-3 w-3.5 h-3.5
+            bg-blue-600 rounded-full
+            border-2 border-white shadow-md
+            transition-all duration-500" style="transform: translateX(-50%);">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Cards -->
                 <div class="grid grid-cols-2 gap-4 text-center">
-                    <div class="card">
-                        <div class="label">Percentil</div>
-                        <div id="percentil" class="value"></div>
+                    <div class="rounded-lg bg-slate-50 p-3">
+                        <div class="text-xs text-slate-500">Percentil</div>
+                        <div id="percentil" class="text-lg font-medium"></div>
                     </div>
 
-                    <div class="card">
-                        <div class="label">Z-score</div>
-                        <div id="zScore" class="value"></div>
+                    <div class="rounded-lg bg-slate-50 p-3">
+                        <div class="text-xs text-slate-500">Z-score</div>
+                        <div id="zScore" class="text-lg font-medium"></div>
                     </div>
 
-                    <div class="card col-span-2">
-                        <div class="label">Rango OMS</div>
-                        <div id="zBucket" class="value"></div>
+                    <div class="col-span-2 rounded-lg bg-slate-50 p-3 hidden">
+                        <div class="text-xs text-slate-500">Rango OMS</div>
+                        <div id="zBucket" class="text-lg font-medium"></div>
                     </div>
                 </div>
+
             </section>
 
             <!-- Error -->

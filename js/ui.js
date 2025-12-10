@@ -1,3 +1,5 @@
+/* UI Helpers */
+
 function showLoading() {
     loading.classList.remove('hidden');
     submitBtn.disabled = true;
@@ -20,23 +22,32 @@ function clearUI() {
     resultSection.classList.add('hidden');
 }
 
+/* Sexo Switch */
+
 const sexSwitch = document.getElementById('sexSwitch');
 const sexKnob = document.getElementById('sexKnob');
 const sexInput = document.getElementById('sex');
 
 let isMale = true;
 
-sexSwitch?.addEventListener('click', () => {
-    isMale = !isMale;
-
+function updateSexUI() {
     if (isMale) {
-        sexKnob.style.left = '0.25rem';
-        sexKnob.classList.replace('bg-pink-500', 'bg-blue-500');
+        sexKnob.style.transform = 'translateX(0)';
+        sexKnob.classList.remove('bg-pink-500');
+        sexKnob.classList.add('bg-blue-500');
         sexInput.value = 'M';
     } else {
-        sexKnob.style.left = 'calc(100% - 2.25rem)';
-        sexKnob.classList.replace('bg-blue-500', 'bg-pink-500');
+        sexKnob.style.transform = 'translateX(100%)';
+        sexKnob.classList.remove('bg-blue-500');
+        sexKnob.classList.add('bg-pink-500');
         sexInput.value = 'F';
     }
+}
+
+sexSwitch.addEventListener('click', () => {
+    isMale = !isMale;
+    updateSexUI();
 });
 
+/* Inicializa estado correcto */
+updateSexUI();
